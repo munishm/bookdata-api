@@ -14,6 +14,7 @@ type Books struct {
 // At the beginning, this simply returns a pointer to the struct literal.
 // You need to change this to load data from the CSV file
 func (b *Books) Initialize() {
+	loader.LoadCSV()
 	b.Store = &loader.BooksLiteral
 }
 
@@ -25,3 +26,5 @@ func (b *Books) GetAllBooks(limit, skip int) *[]*loader.BookData {
 	ret := (*b.Store)[skip:limit]
 	return &ret
 }
+
+
