@@ -6,6 +6,6 @@ import "github.com/matt-FFFFFF/bookdata-api/loader"
 // Using an interface means we could replace the datastore with something else,
 // as long as that something else provides these method signatures...
 type BookStore interface {
-	Initialize()
+	Initialize(fileName string)
 	GetAllBooks(limit, skip int) *[]*loader.BookData
 }

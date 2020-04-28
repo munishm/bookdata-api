@@ -15,10 +15,11 @@ var (
 
 func init() {
 	books = &datastore.Books{}
-	books.Initialize()
+	defer books.Initialize("./assets/books.csv")
 }
 
 func main() {
+	
 	r := mux.NewRouter()
 	log.Println("bookdata api")
 	api := r.PathPrefix("/api/v1").Subrouter()
@@ -27,4 +28,7 @@ func main() {
 	})
 	api.HandleFunc("/books", getAllBooks).Methods(http.MethodGet)
 	log.Fatalln(http.ListenAndServe(":8080", r))
+
+	
 }
+

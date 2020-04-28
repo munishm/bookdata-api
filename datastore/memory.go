@@ -13,7 +13,9 @@ type Books struct {
 // Initialize is the method used to populate the in-memory datastore.
 // At the beginning, this simply returns a pointer to the struct literal.
 // You need to change this to load data from the CSV file
-func (b *Books) Initialize() {
+func (b *Books) Initialize(fileName string) {
+	// b.Store = &loader.BooksLiteral
+	loader.LoadCsvData(fileName)
 	b.Store = &loader.BooksLiteral
 }
 
