@@ -2,8 +2,10 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"strconv"
+	"github.com/gorilla/mux"
 )
 
 func getAllBooks(w http.ResponseWriter, r *http.Request) {
@@ -17,6 +19,22 @@ func getAllBooks(w http.ResponseWriter, r *http.Request) {
 	}
 	data := books.GetAllBooks(limit, skip)
 	b, err := json.Marshal(data)
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(`{"error": "error marshalling data"}`))
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write(b)
+	return
+}
+
+func getBooksByAuthor(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	author := mux.Vars(r)["author"]
+	data := books.GetBooksByAuthor(author)
+	b, err := json.Marshal(data)
+	//logic
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(`{"error": "error marshalling data"}`))

@@ -2,6 +2,7 @@ package datastore
 
 import (
 	"github.com/matt-FFFFFF/bookdata-api/loader"
+	"strings"
 )
 
 // Books is the memory-backed datastore used by the API
@@ -25,6 +26,17 @@ func (b *Books) GetAllBooks(limit, skip int) *[]*loader.BookData {
 	}
 	ret := (*b.Store)[skip:limit]
 	return &ret
+}
+
+// GetBooksByAuthor will return books filtered by the given author
+func (b *Books) GetBooksByAuthor(author string) *[]*loader.BookData {
+	tmp := (*b.Store)[:0]
+	for _, book := range (*b.Store) {
+		if strings.Contains(book.Authors, author) {
+			tmp = append(tmp,book)
+		}
+	}
+	return &tmp
 }
 
 
