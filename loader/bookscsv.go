@@ -6,6 +6,8 @@ import (
 	"io"
 	"log"
 	"strconv"
+	"fmt"
+	"time"
 )
 
 // BooksLiteral 
@@ -13,10 +15,16 @@ var BooksLiteral []*BookData
 
 // LoadCSV function for loading data from CSV
 func LoadCSV() {
+	//
+	fmt.Printf("Starting csv loading at %s", time.Now())
+	startTime := time.Now()
+	defer calculateTime(time.Now(), "LoadCSV")
 	csvfile, err := os.Open("./assets/books.csv")
 	if err != nil {
 		log.Fatalln("Couldn't open the csv file", err)
 	}
+	defer csvfile.Close()
+	//Push Onto Defer
 	// Parse the file
 	r := csv.NewReader(csvfile)
 
@@ -42,6 +50,12 @@ func LoadCSV() {
 		//fmt.Println(bookList)
 		b := BookData{record[0], record[1], record[2], avgRating, record[4], record[5], record[6], int(numPages), int(ratings), int(reviews)}
 		BooksLiteral = append(BooksLiteral, &b)
-	}
 
+	}
+	fmt.Printf("load CSV fn end time %s " , time.Since(startTime))
+}
+
+//Call Defer and Calculate difference
+func calculateTime(startTime time.Time, functionName string) {
+	fmt.Printf("Running time of %s is %s\n", functionName, time.Since(startTime))
 }
