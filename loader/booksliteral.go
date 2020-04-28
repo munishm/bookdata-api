@@ -2,7 +2,7 @@ package loader
 
 // BooksLiteral is a slice literal of Bookdata struct pointers, containing a subset of the real book data
 // Once you have created your CSV loader, you will not need this file.
-var BooksLiteral = []*BookData{
+var BooksLiteral1 = []*BookData{
 	{
 		BookID:        "1",
 		Title:         "Harry Potter and the Half-Blood Prince (Harry Potter  #6)",
